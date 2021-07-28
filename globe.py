@@ -63,16 +63,26 @@ def update_scores(arr):
 		arr[i].picks = arr[i].picks + (len(arr) - 1)
 		arr[i].score = (opp_score + (400 * (arr[i].wins - arr[i].losses))) / arr[i].picks
 
+def choose_one_close(num):
+	if num - 1 < 0:
+		return num + 1
+	else:
+		return num - 1
+
 def sort_w_error(arr, err):
 	sort = sorted(arr, key=lambda x: x.num)
 	rand = random.uniform(0, 1)
 	if err: 
 		if rand < 0.75:
-			sort = swap(sort, randrange(len(arr)), randrange(len(arr)))
-			if rand < 0.5:
-				sort = swap(sort, randrange(len(arr)), randrange(len(arr)))
+			num = randrange(len(arr))
+			sort = swap(sort, num, choose_one_close(num))
+			if rand < 0.50:
+				num = randrange(len(arr))
+				sort = swap(sort, num, choose_one_close(num))
 				if rand < 0.25:
-					sort = swap(sort, randrange(len(arr)), randrange(len(arr)))
-					if rand < 0.12:
-						sort = swap(sort, randrange(len(arr)), randrange(len(arr)))
+					num = randrange(len(arr))
+					sort = swap(sort, num, choose_one_close(num))
+					if rand < 0.125:
+						num = randrange(len(arr))
+						sort = swap(sort, num, choose_one_close(num))
 	return sort

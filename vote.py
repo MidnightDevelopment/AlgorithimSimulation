@@ -15,7 +15,7 @@ for idx, submission in enumerate(submissions_entries):
 		random_arr = []
 		for idx in random_idxs:
 			random_arr.append(submissions[idx])
-		tournament_results = sort_w_error(random_arr, False)
+		tournament_results = sort_w_error(random_arr, True)
 		update_scores(tournament_results)
 		for j, idx in enumerate(random_idxs):
 			submissions[idx] = tournament_results[j] 
