@@ -52,6 +52,12 @@ def select_idx(arr):
 		pick_sorted = sorted(range(top * i, top * (i + 1)), key=lambda k: arr[k].picks)
 		idxs.append(pick_sorted[0])
 	return idxs
+
+def getWinProbability(suba, subb):
+        p = (subb.score - suba.score) / 400.0
+        E = 1.0 / (1.0 + 10**(p))
+        return E
+
 def update_scores(arr):
 	for i in range(len(arr)):
 		opp_score = 0
@@ -62,6 +68,18 @@ def update_scores(arr):
 		arr[i].wins = arr[i].wins + i
 		arr[i].picks = arr[i].picks + (len(arr) - 1)
 		arr[i].score = (opp_score + (400 * (arr[i].wins - arr[i].losses))) / arr[i].picks
+	'''
+	for i in range(len(arr)):
+		for j in range(len(arr)):
+			if i < j:
+				E = getWinProbability(arr[j], arr[i])
+				arr[j].score += arr[j].K * (1.0 - E)
+				arr[i].score -= arr[i].K * (1.0 - E)
+			elif i > j:
+				E = getWinProbability(arr[i], arr[j])
+				arr[i].score += arr[i].K * (1.0 - E)
+				arr[j].score -= arr[j].K * (1.0 - E)
+	'''
 
 def choose_one_close(num):
 	if num - 1 < 0:
